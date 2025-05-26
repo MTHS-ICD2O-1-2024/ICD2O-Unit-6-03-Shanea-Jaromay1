@@ -1,26 +1,27 @@
-// Copyright (c) 2020 Mr. Coxall All rights reserved
+// Copyright (c) 2020 Shanea Jaromay All rights reserved
 //
-// Created by: Mr. Coxall
-// Created on: Sep 2020
+// Created by: Shanea Jaromay
+// Created on: May 2025
 // This file contains the JS functions for index.html
 
 "use strict"
 
 /**
- * This function gets the Cat fact.
+ * This function gets the weather today.
  * The "async" is there because it will take time for the internet to return the value
  */
-async function getCatFact() {
+async function getWeather() {
   // the "try" is here because the internet may not be working
   // it is like an "if ... else" statement"
   try {
-    const resultJSON = await fetch("https://meowfacts.herokuapp.com/")
+    const resultJSON = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=45.4211435&lon=-75.6900574&appid=fe1d80e1e103cff8c6afd190cad23fa5")
     const jsonData = await resultJSON.json()
     console.log(jsonData)
-    const randomFactNumber = jsonData.data[0]
+    const tempKelvin = jsonData.main.temp
+    const tempCelsius = tempKelvin - 273.15
 
     // output
-    document.getElementById("cat-fact").innerHTML = "<p>" + randomFactNumber + "</p>"
+    document.getElementById("weather-today").innerHTML = tempCelsius.toFixed(1) + " °C"
   } catch (error) {
     console.error(error)
   }
